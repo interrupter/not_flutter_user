@@ -33,7 +33,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             TextButton(
               onPressed: () async {
                 context.read<AuthBloc>().add(
-                      const AuthEventRequestedEmailConfirmation(),
+                      const AuthEventLogout(),
                     );
               },
               child: const Text("Restart"),

@@ -15,8 +15,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       ));
     });
     on<AuthEventRequestedEmailConfirmation>((event, emit) async {
-      await provider.requestEmailConfirmation();
-      emit(state);
+      try {
+        await provider.requestEmailConfirmation();
+        emit(state);
+      } catch (e) {
+        log(e.toString());
+        emit(state);
+      }
     });
 
     on<AuthEventRegister>((event, emit) async {
@@ -27,7 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           email: email,
           password: password,
         );
-        emit(const AuthStateNeedsVerification(isLoading: false));
+        emit(const AuthStateEmailNeedsConfirmation(isLoading: false));
       } on Exception catch (e) {
         emit(AuthStateRegistering(exception: e, isLoading: false));
       }
@@ -44,7 +49,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           ),
         );
       } else if (!user.emailConfirmed) {
-        emit(const AuthStateNeedsVerification(isLoading: false));
+        emit(const AuthStateEmailNeedsConfirmation(isLoading: false));
       } else {
         emit(AuthStateLoggedIn(user: user, isLoading: false));
       }
@@ -63,23 +68,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           email: email,
           password: password,
         );
-        if (!user.emailConfirmed) {
-          log('email not confirmed');
-          emit(
-            const AuthStateLoggedOut(
-              exception: null,
-              isLoading: false,
-            ),
-          );
-        } else {
+        if (user.emailConfirmed) {
           log('email confirmed');
-          emit(
-            const AuthStateLoggedOut(
-              exception: null,
-              isLoading: false,
-            ),
-          );
           emit(AuthStateLoggedIn(user: user, isLoading: false));
+        } else {
+          log('email not confirmed!');
+          emit(AuthStateEmailNeedsConfirmation(isLoading: false));
         }
       } on Exception catch (e) {
         emit(AuthStateLoggedOut(

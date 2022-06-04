@@ -60,6 +60,8 @@ class NotNodeAuthProvider implements AuthProvider {
         NotManifestCredatials().byBearer(token);
       }
       currentUser = authUser;
+      //retrieving information about available models/actions
+      await NotManifest().update();
       return authUser;
     } on NotResponseException catch (e) {
       log(e.toString());
@@ -84,6 +86,8 @@ class NotNodeAuthProvider implements AuthProvider {
   @override
   Future<void> logout() async {
     await NotManifest().fetch(authModel, 'logout', {});
+    //retrieving information about available models/actions
+    await NotManifest().update();
   }
 
   @override
@@ -131,6 +135,7 @@ class NotNodeAuthProvider implements AuthProvider {
       if (token != null && token.isNotEmpty) {
         NotManifestCredatials().byBearer(token);
       }
+      await NotManifest().update();
       return authUser;
     } on NotResponseException catch (e) {
       switch (e.message) {

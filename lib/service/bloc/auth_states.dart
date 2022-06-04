@@ -40,8 +40,8 @@ class AuthStateLoggedIn extends AuthState {
       : super(isLoading: isLoading);
 }
 
-class AuthStateNeedsVerification extends AuthState {
-  const AuthStateNeedsVerification({required bool isLoading})
+class AuthStateEmailNeedsConfirmation extends AuthState {
+  const AuthStateEmailNeedsConfirmation({required bool isLoading})
       : super(isLoading: isLoading);
 }
 
