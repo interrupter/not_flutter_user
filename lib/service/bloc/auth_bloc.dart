@@ -14,23 +14,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         isLoading: false,
       ));
     });
+
     on<AuthEventRequestedEmailConfirmation>((event, emit) async {
-      try {
-        await provider.requestEmailConfirmation();
-        emit(state);
-      } catch (e) {
-        log(e.toString());
-        emit(state);
-      }
+      emit(state);
     });
 
     on<AuthEventRegister>((event, emit) async {
+      final username = event.username;
       final email = event.email;
       final password = event.password;
+      final telephone = event.telephone;
       try {
         await provider.registerNewUser(
+          username: username,
           email: email,
           password: password,
+          telephone: telephone,
         );
         emit(const AuthStateEmailNeedsConfirmation(isLoading: false));
       } on Exception catch (e) {

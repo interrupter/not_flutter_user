@@ -15,8 +15,10 @@ abstract class AuthProvider {
   });
 
   Future<AuthUser> registerNewUser({
+    required String username,
     required String email,
     required String password,
+    required String telephone,
   });
 
   Future<void> requestEmailConfirmation();

@@ -4,14 +4,14 @@ import '../service/bloc/auth_events.dart';
 
 import '../service/bloc/auth_bloc.dart';
 
-class VerifyEmailView extends StatefulWidget {
-  const VerifyEmailView({Key? key}) : super(key: key);
+class ConfirmEmailView extends StatefulWidget {
+  const ConfirmEmailView({Key? key}) : super(key: key);
 
   @override
-  State<VerifyEmailView> createState() => _VerifyEmailViewState();
+  State<ConfirmEmailView> createState() => _ConfirmEmailViewState();
 }
 
-class _VerifyEmailViewState extends State<VerifyEmailView> {
+class _ConfirmEmailViewState extends State<ConfirmEmailView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -17,11 +17,15 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
+  late final TextEditingController _username;
+  late final TextEditingController _telephone;
 
   @override
   void initState() {
     _email = TextEditingController();
     _password = TextEditingController();
+    _username = TextEditingController();
+    _telephone = TextEditingController();
     super.initState();
   }
 
@@ -29,6 +33,8 @@ class _RegisterViewState extends State<RegisterView> {
   void dispose() {
     _email.dispose();
     _password.dispose();
+    _username.dispose();
+    _telephone.dispose();
     super.dispose();
   }
 
@@ -56,12 +62,26 @@ class _RegisterViewState extends State<RegisterView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextField(
+                controller: _username,
+                decoration: const InputDecoration(hintText: 'Username'),
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
+              ),
+              TextField(
                 controller: _email,
                 decoration: const InputDecoration(hintText: 'Email'),
                 enableSuggestions: false,
                 autocorrect: false,
                 autofocus: true,
                 keyboardType: TextInputType.emailAddress,
+              ),
+              TextField(
+                controller: _telephone,
+                decoration: const InputDecoration(hintText: 'Telephone'),
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
               ),
               TextField(
                 controller: _password,
@@ -77,10 +97,14 @@ class _RegisterViewState extends State<RegisterView> {
                       onPressed: () async {
                         final email = _email.text;
                         final password = _password.text;
+                        final username = _username.text;
+                        final telephone = _telephone.text;
                         context.read<AuthBloc>().add(
                               AuthEventRegister(
+                                username,
                                 email,
                                 password,
+                                telephone,
                               ),
                             );
                       },

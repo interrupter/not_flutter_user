@@ -13,10 +13,17 @@ class AuthService implements AuthProvider {
 
   @override
   Future<AuthUser> registerNewUser({
+    required String username,
     required String email,
     required String password,
+    required String telephone,
   }) =>
-      provider.registerNewUser(email: email, password: password);
+      provider.registerNewUser(
+        username: username,
+        email: email,
+        password: password,
+        telephone: telephone,
+      );
 
   @override
   Future<AuthUser> login({

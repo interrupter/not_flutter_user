@@ -17,12 +17,21 @@ class NotNodeAuthProvider implements AuthProvider {
 
   @override
   Future<AuthUser> registerNewUser({
+    required String username,
     required String email,
     required String password,
+    required String telephone,
   }) async {
     try {
       NotResponse res = await NotManifest().getModel(authModel).request(
-          'register', {'email': email, 'password': password}).getResponse();
+        'register',
+        {
+          'username': username,
+          'email': email,
+          'password': password,
+          'telephone': telephone,
+        },
+      ).getResponse();
       final authUser = AuthUser.fromAuthRegisterResponse(res.getResult());
       final token = authUser.token;
       if (token != null && token.isNotEmpty) {

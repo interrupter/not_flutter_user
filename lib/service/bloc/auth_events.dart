@@ -27,7 +27,14 @@ class AuthEventRequestedEmailConfirmation extends AuthEvent {
 class AuthEventRegister extends AuthEvent {
   final String email;
   final String password;
-  const AuthEventRegister(this.email, this.password);
+  final String username;
+  final String telephone;
+  const AuthEventRegister(
+    this.username,
+    this.email,
+    this.password,
+    this.telephone,
+  );
 }
 
 class AuthEventShouldRegister extends AuthEvent {
