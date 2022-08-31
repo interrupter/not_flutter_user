@@ -106,7 +106,12 @@ class NotNodeAuthProvider implements AuthProvider {
 
   @override
   Future<void> initialize(String serverUrl) async {
-    await NotManifest().setServerUrl(serverUrl).update();
+    try {
+      await NotManifest().setServerUrl(serverUrl).update();
+    } catch (e) {
+      print('manifest error: ${e.toString()}');
+      throw NotManifestLoadException();
+    }
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:not_flutter_user/service/auth_exceptions.dart';
 import '../auth_provider.dart';
 import './auth_events.dart';
 import 'auth_states.dart';
@@ -38,7 +39,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<AuthEventInitialize>((event, emit) async {
-      await provider.initialize(event.serverUrl);
+      try {
+        await provider.initialize(event.serverUrl);
+      } on NotManifestLoadException catch (e) {
+        emit(
+          AuthStateLoggedOut(
+            exception: e,
+            isLoading: false,
+          ),
+        );
+        return;
+      }
       final user = provider.currentUser;
       if (user == null) {
         emit(
