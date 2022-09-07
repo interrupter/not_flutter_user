@@ -35,7 +35,7 @@ class NotNodeAuthProvider implements AuthProvider {
       final authUser = AuthUser.fromAuthRegisterResponse(res.getResult());
       final token = authUser.token;
       if (token != null && token.isNotEmpty) {
-        NotManifestCredatials().byBearer(token);
+        NotManifestCredentials().byBearer(token);
       }
       currentUser = authUser;
       return authUser;
@@ -66,7 +66,7 @@ class NotNodeAuthProvider implements AuthProvider {
       final authUser = AuthUser.fromAuthLoginResponse(res.getResult());
       final token = authUser.token;
       if (token != null && token.isNotEmpty) {
-        NotManifestCredatials().byBearer(token);
+        NotManifestCredentials().byBearer(token);
       }
       currentUser = authUser;
       //retrieving information about available models/actions
@@ -147,7 +147,7 @@ class NotNodeAuthProvider implements AuthProvider {
       final authUser = AuthUser.fromAuthLoginResponse(res.getResult());
       final token = authUser.token;
       if (token != null && token.isNotEmpty) {
-        NotManifestCredatials().byBearer(token);
+        NotManifestCredentials().byBearer(token);
       }
       await NotManifest().update();
       return authUser;
